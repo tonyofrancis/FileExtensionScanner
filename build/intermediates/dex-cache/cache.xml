@@ -84,21 +84,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.0.1_41487cab5197119e4507bfc242924de3aa166683.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner/app/build/intermediates/exploded-aar/FileExtensionScanner/library/unspecified/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="74a8899d0e259415eb1d19c7f86ed13ca5635ccf">
         <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner/app/build/intermediates/pre-dexed/debug/FileExtensionScanner-library-unspecified_8d427dc7cd24eb8dd0ca54ec2f5153f401f6e50a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.0.1_41487cab5197119e4507bfc242924de3aa166683.jar" />
     </item>
     <item
         is-multidex="false"
@@ -133,7 +133,7 @@
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="74a8899d0e259415eb1d19c7f86ed13ca5635ccf">
+        sha1="813ea2e3d747eafd1c53a5fc58aaa276445e1a26">
         <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/pre-dexed/debug/FileExtensionScanner 2-library-unspecified_c6e7440b980345d60ab11880072a2ca2dd905fc4.jar" />
     </item>
     <item
@@ -156,21 +156,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_5491633d903ff0da797dc2a43c8b529a77803fd7.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
         <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_8a1c9780c250a42154382d896334379f0469bb6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/Users/tonyofrancis/Documents/git/FileExtensionScanner 2/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_5491633d903ff0da797dc2a43c8b529a77803fd7.jar" />
     </item>
     <item
         is-multidex="false"

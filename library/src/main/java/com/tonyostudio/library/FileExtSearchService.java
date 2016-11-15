@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -72,7 +73,6 @@ public class FileExtSearchService extends IntentService {
      * @return a pre-configured intent that will start the file extension service
      * */
     public static Intent newIntent(@Nullable Context context, @Nullable String[] fileExtensions, @Nullable String[] dirPaths, int actionType, boolean scanDirs) {
-
         Intent intent = new Intent(context,FileExtSearchService.class);
         intent.putExtra(EXTRA_FILE_EXTENSIONS,fileExtensions);
         intent.putExtra(EXTRA_DIR_PATHS,dirPaths);
@@ -80,6 +80,27 @@ public class FileExtSearchService extends IntentService {
         intent.putExtra(EXTRA_ACTION_SCAN,scanDirs);
 
         return intent;
+    }
+
+    /** Convenience method used to get a bundle that will start the service and scan watched
+     * directories for the passed in file extensions. Use this method when overriding this service.
+     *
+     * @param fileExtensions file extensions to match. If null, all files and sub directories in the watched directory will be returned.
+     * @param dirPaths an array of directory paths that will be watched/scanned by the service
+     * @param actionType indicates whether or not the dirPath field is inserted or removed from the service watch database
+     * @param scanDirs indicates if the service should start a scan
+     *
+     * @return a pre-configured bundle that will start the file extension service
+     * */
+    public static Bundle newBundle(@Nullable String[] fileExtensions, @Nullable String[] dirPaths, int actionType, boolean scanDirs) {
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArray(EXTRA_FILE_EXTENSIONS,fileExtensions);
+        bundle.putStringArray(EXTRA_DIR_PATHS,dirPaths);
+        bundle.putInt(EXTRA_ACTION_TYPE,actionType);
+        bundle.putBoolean(EXTRA_ACTION_SCAN,scanDirs);
+
+        return bundle;
     }
 
     /** Convenience method used to get an intent that will start the service and scan watched
@@ -100,6 +121,23 @@ public class FileExtSearchService extends IntentService {
         return intent;
     }
 
+    /** Convenience method used to get a bundle that will start the service and scan watched
+     * directories. Use this method when overriding this service
+     *
+     * @param fileExtensions file extensions to match. If null, all files and sub directories in the watched directory will be returned.
+     *
+     * @return a pre-configured bundle that will start the file extension service and scan for files that
+     * matches the passed in file extensions
+     * */
+    public static Bundle newIntent(@Nullable String[] fileExtensions) {
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(EXTRA_ACTION_SCAN,true);
+        bundle.putStringArray(EXTRA_FILE_EXTENSIONS,fileExtensions);
+
+        return bundle;
+    }
+
     /** Method used to retrieve a pre-configured IntentFilter that can be used
      * by a broadcast receiver in the application to listen for results from the service
      *
@@ -111,6 +149,13 @@ public class FileExtSearchService extends IntentService {
 
     public FileExtSearchService() {
         super("FileExtSearchService");
+    }
+
+    /** Call this constructor if you are extending this service
+     * @param name service name
+     * */
+    public FileExtSearchService(String name) {
+        super(name);
     }
 
     @Override
@@ -162,8 +207,40 @@ public class FileExtSearchService extends IntentService {
             if(filePaths != null) {
                 filePaths = new ArrayList<>(new LinkedHashSet<>(filePaths));
             }
-            sendBroadcast(createResultIntent(filePaths));
+            String[] matchedFiles = pathListToArray(filePaths);
+            sendBroadcast(createResultIntent(matchedFiles));
+            onResultsDelivered(matchedFiles);
         }
+    }
+
+    /**
+     * This method will be called after the service broadcast the results of the scan.
+     * Use/Override this method only when extending this service and you need the results inside of the service,
+     * Otherwise listen for a broadcast intent from the app for the results of a scan.
+     * Note that this method is called on the background thread.
+     *
+     * @param filePaths an array of file paths that matched on of the passed in file extensions
+     * */
+    public void onResultsDelivered(String[] filePaths) {
+
+    }
+
+    /**
+     * Utility method used to convert a list of file paths
+     * to an array of file paths.
+     *
+     * @param filePaths a list of file paths
+     * @return an array of file paths. This method may return null
+     * */
+    private String[] pathListToArray(List<String> filePaths) {
+
+        if(filePaths == null) {
+            return null;
+        }
+
+        String[] matchedFiles = new String[filePaths.size()];
+        filePaths.toArray(matchedFiles);
+        return matchedFiles;
     }
 
     /** Method used to create an Intent that will be broadcast by
@@ -175,22 +252,12 @@ public class FileExtSearchService extends IntentService {
      *
      * @return pre-configured intent that will be broadcast with the results.
      * Retrieve the results from the intent with the key EXTRA_RESULTS.
-     * The results may be an empty array
+     * The results may be null
      * */
-    private Intent createResultIntent(List<String> filePaths) {
-
-        String[] matchedFiles;
-
-        if(filePaths != null) {
-            matchedFiles = new String[filePaths.size()];
-            filePaths.toArray(matchedFiles);
-        } else {
-            matchedFiles = new String[0];
-        }
-
+    private Intent createResultIntent(String[] filePaths) {
 
         Intent intent = new Intent(ACTION_SEARCH_COMPLETE);
-        intent.putExtra(EXTRA_RESULTS,matchedFiles);
+        intent.putExtra(EXTRA_RESULTS,filePaths);
         return intent;
     }
 
@@ -283,6 +350,7 @@ public class FileExtSearchService extends IntentService {
      *  */
     private void verifyDatabaseIntegrity() {
         String[] watchedDirectories = fileExtSearchDatabase.getAllPaths();
+
 
         if(watchedDirectories == null) {
             return;

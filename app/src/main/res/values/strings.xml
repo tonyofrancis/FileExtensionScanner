@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">File Extension Scanner</string>
+
+    <string-array name="file_exts">
+        <item>.zip</item>
+        <item>.txt</item>
+        <item>.doc</item>
+        <item>.iroko</item>
+        <item>.apk</item>
+        <item>.html</item>
+    </string-array>
+
+</resources>

@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             String[] permissions = new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permissions, STORAGE_REQUEST_CODE);
         } else {
-            getFiles();
+            runFileExtensionSearchService();
+            runAppFileScannerService();
         }
     }
 
@@ -55,12 +56,13 @@ public class MainActivity extends AppCompatActivity {
 
             int granted = android.content.pm.PackageManager.PERMISSION_GRANTED;
             if(grantResults[0] == granted) {
-                getFiles();
+                runFileExtensionSearchService();
+                runAppFileScannerService();
             }
         }
     }
 
-    private void getFiles() {
+    private void runFileExtensionSearchService() {
 
         String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         String dirPath1 = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -70,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = FileExtSearchService.newIntent(this,fileExts,dirPaths, FileExtSearchService.EXTRA_ADD,true);
 
+        startService(intent);
+    }
+
+    private void runAppFileScannerService() {
+
+        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        String dirPath1 = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        String[] fileExts = getResources().getStringArray(R.array.file_exts);
+        String[] dirPaths = new String[] {dirPath,dirPath1};
+
+        Bundle bundle = AppFileScannerService.newBundle(fileExts,dirPaths,FileExtSearchService.EXTRA_ADD,true);
+        Intent intent = new Intent(this,AppFileScannerService.class);
+        intent.putExtras(bundle);
         startService(intent);
     }
 

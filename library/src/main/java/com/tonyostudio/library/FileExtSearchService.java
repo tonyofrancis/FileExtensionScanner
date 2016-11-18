@@ -61,6 +61,9 @@ public class FileExtSearchService extends IntentService {
      *  all the passed in directory paths that the service needs to watch/scan */
     private FileExtSearchDatabase fileExtSearchDatabase;
 
+    /** Field used to hold the name of the running service. This name is used to identify the service */
+    private String serviceName;
+
     /** Convenience method used to get an intent that will start the service and scan watched
      * directories for the passed in file extensions
      *
@@ -148,7 +151,7 @@ public class FileExtSearchService extends IntentService {
     }
 
     public FileExtSearchService() {
-        super("FileExtSearchService");
+        this("FileExtSearchService");
     }
 
     /** Call this constructor if you are extending this service
@@ -156,12 +159,13 @@ public class FileExtSearchService extends IntentService {
      * */
     public FileExtSearchService(String name) {
         super(name);
+        this.serviceName = name;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        fileExtSearchDatabase = new FileExtSearchDatabase(this);
+        fileExtSearchDatabase = new FileExtSearchDatabase(this,serviceName);
     }
 
     @Override

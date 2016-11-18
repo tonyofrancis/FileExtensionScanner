@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 /**
  * Created by tonyofrancis on 11/11/16.
@@ -22,9 +23,6 @@ public class FileExtSearchDatabase extends SQLiteOpenHelper {
 
     /** Database version*/
     public static final int VERSION = 1;
-
-    /** Database file name*/
-    public static final String NAME = "file_ext_scanner.db";
 
     /**
      * Class used to hold the table name and column names for the single table
@@ -46,12 +44,12 @@ public class FileExtSearchDatabase extends SQLiteOpenHelper {
         }
     }
 
-
     /**
      * @param context current context
+     * @param name database file name
      * */
-    public FileExtSearchDatabase(Context context) {
-        super(context, NAME, null, VERSION);
+    public FileExtSearchDatabase(Context context,@NonNull String name) {
+        super(context, name.concat(".db"), null, VERSION);
     }
 
     /**
